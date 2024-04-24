@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "09f3cfcd-9d48-4758-8f74-635c39516e43",
+		"name": "reqres",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23091844"
+	},
+	"item": [
+		{
+			"name": "lister",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creer",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set('prenom',pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							"pm.collectionVariables.set('metier','QA Engineer')\r",
+							"pm.variables.set('job',pm.variables.replaceIn('{{$randomJobTitle}}'))\r",
+							"pm.environment.set('urlBase','https://reqres.in')"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsondata = pm.response.json()\r",
+							"pm.test('code status',function(){\r",
+							"  pm. expect(pm.response.code).eq(201)\r",
+							"})\r",
+							"pm.test('check name',function(){\r",
+							"   pm.expect(jsondata.name).equal(pm.variables.get('prenom'))\r",
+							"})\r",
+							"pm.test('check job',function(){\r",
+							"   pm.expect(jsondata.job).equal(pm.variables.get('job'))\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"{{prenom}}\",\r\n    \"job\":\"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlBase}}/api/users",
+					"host": [
+						"{{urlBase}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creer Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData=pm.response.json()\r",
+							"pm.test.skip('code status',function(){\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test('check name',function(){\r",
+							"   pm.expect(jsonData.name).eq(pm.iterationData.get('prenom'))\r",
+							"})\r",
+							"pm.test('check job',function(){\r",
+							"   pm.expect(jsonData.job).eq(pm.iterationData.get('metier'))\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"{{prenom}}\",\r\n    \"job\":\"{{metier}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlBase}}/api/users",
+					"host": [
+						"{{urlBase}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifier",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\":\"hajiba\",\r\n   \"job\":\"qa\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/{{vr}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{vr}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "supprimer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edituser1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=1",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "vr",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "metier",
+			"value": ""
+		}
+	]
+}
