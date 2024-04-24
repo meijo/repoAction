@@ -1,0 +1,19 @@
+name: tester api postman
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  postman-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Node
+        uses: actions/setup-node@v3
+      - name: Installer newman
+        run: npm install -g newman
+      - name: executer la collection postman
+        run: newman run collection.json
+      - name: newman run notre collection
+        run: newman run collection.json --reporters=cli,htmlextra
+
